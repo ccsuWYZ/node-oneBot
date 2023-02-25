@@ -1,0 +1,61 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/myapp
+    username: test_ly
+    password: sikuboxDatabase@rootPwd
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+  servlet:
+  multipart:
+    max-request-size: 5GB  # 上传文件总的最大值 默认10MB
+    max-file-size: 1GB #单个文件最大值 默认10MB
+
+  # redis 配置
+  redis:
+    # 地址
+#    host: localhost
+    host: localhost
+    # 端口，默认为6379
+    port: 6379
+    # 数据库索引
+    database: 0
+    # 密码
+    password: Redis7788_99@LYisRoot
+#    password:
+    # 连接超时时间
+    timeout: 10s
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池的最大数据库连接数
+        max-active: 8
+        # #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+
+file:
+#  location: D:/demo/static/uploadImages/ #自定义上传文件本地保存路径,windows
+  location: /www/wwwroot/uploadImages/ #自定义上传文件本地保存路径,linux
+  path: /skApi/uploadImages/**
+  returnUrl: https://ccsuly.top/skApi/uploadImages/
+#  returnUrl: http://localhost:5001/skApi/uploadImages/
+
+##静态资源对外暴露的访问路径
+#  file.staticAccessPath=/api/file/**
+#  #文件上传目录（注意Linux和Windows上的目录结构不同）
+#  #file.uploadFolder=/root/uploadFiles/
+#  file.uploadFolder=d://uploadFiles/
+#shiro:
+#  loginUrl: /static/hello.html
+server:
+  port: 5001
+
+mybatis:
+  # spring boot集成mybatis的方式打印sql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
