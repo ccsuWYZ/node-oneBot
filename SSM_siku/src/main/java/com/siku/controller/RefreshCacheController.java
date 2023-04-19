@@ -28,8 +28,8 @@ public class RefreshCacheController {
     @ResponseBody
     public AjaxResult refreshCache(){
 
-        tikuService.resetConfigCache();
-        tikuDetailService.resetConfigCache();
+//        tikuService.resetConfigCache();
+//        tikuDetailService.resetConfigCache();
         return new AjaxResult(200,"刷新缓存成功");
     }
 }

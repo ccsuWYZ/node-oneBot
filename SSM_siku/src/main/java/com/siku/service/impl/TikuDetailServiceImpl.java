@@ -28,8 +28,15 @@ public class TikuDetailServiceImpl implements TikuDetailService {
     @Override
     public void loadingConfigCache() {
         for (String  bankid : tikuMapper.selectBankid()) {
+
+            //从数据库得到数据
             List<TikuDetail> tikuDetailList = tikuDetailMapper.selectAllByBankId(bankid);
+
+
+            //把从数据库得到的数据格式化成前端需要的
             List<TikuDetailFormate> tikuDetailFormateList = FormateTikuDetail.formateTikudetail(tikuDetailList);
+
+            //存进缓存，后续可以加个条件，只缓存公共题库
             redisCache.setCacheList(getCacheKey(bankid), tikuDetailFormateList);
         }
     }
@@ -56,12 +63,12 @@ public class TikuDetailServiceImpl implements TikuDetailService {
         return CacheConstants.TIKUDETAIL_INFO_KEY + configKey;
     }
 
-    /**
-     * 项目启动时，把信息表存到缓存
-     */
+  /**
+   * 项目启动时，把信息表存到缓存
+   */
     @PostConstruct
     public void init() {
-        loadingConfigCache();
+        resetConfigCache();
     }
 
 
@@ -70,13 +77,20 @@ public class TikuDetailServiceImpl implements TikuDetailService {
     @Override
     public AjaxResult selectAll(String bankId) {
         System.out.println(bankId);
+
         List<TikuDetailFormate> tikuDetailFormateList = redisCache.getCacheList(CacheConstants.TIKUDETAIL_INFO_KEY + bankId);
+
+//                List<TikuDetailFormate> tikuDetailFormateList ;
+
+//        System.out.println(tikuDetailFormateList.size());
+
 
         if (tikuDetailFormateList.isEmpty()) {
             System.out.println("题目列表缓存为空");
             List<TikuDetail> tikuDetailList = tikuDetailMapper.selectAllByBankId(bankId);
             tikuDetailFormateList = FormateTikuDetail.formateTikudetail(tikuDetailList);
         }
+
         return new AjaxResult(200, "获取题目列表成功",tikuDetailFormateList );
     }
 }

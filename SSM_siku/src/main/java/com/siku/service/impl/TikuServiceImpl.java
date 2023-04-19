@@ -74,6 +74,6 @@ public class TikuServiceImpl implements TikuService {
     @PostConstruct
     public void init()
     {
-        loadingConfigCache();
+        resetConfigCache();
     }
 }
